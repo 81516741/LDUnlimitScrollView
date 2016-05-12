@@ -9,7 +9,7 @@
 #import "ViewController.h"
 #import "LDUnlimitScrollView.h"
 
-@interface ViewController ()
+@interface ViewController ()<LDUnlimitScrollViewDelegate>
 
 @end
 
@@ -29,11 +29,16 @@
     //这里也没什么，就是把unlimitView添加到控制器的view上面显示
     unlimitView.frame = CGRectMake(0, 200,[UIScreen mainScreen].bounds.size.width, 150);
     [self.view addSubview:unlimitView];
+    
+    //设置代理回调
+    unlimitView.delegate = self;
 }
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+-(void)unlimitScrollView:(LDUnlimitScrollView *)unlimitScrollView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    NSLog(@"你点击了%@",indexPath);
 }
+
+
 
 @end

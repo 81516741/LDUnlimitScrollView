@@ -32,7 +32,9 @@ static NSString * ID = @"item";
 -(void)setItemsList:(NSArray *)itemsList
 {
     _itemsList = itemsList;
-    //注册cell
+    if (_itemsList == nil || _itemsList.count == 0) {
+        _itemsList = @[[UIImage imageNamed:@"holder"]];
+    }    //注册cell
     [self.collectionView registerNib:[UINib nibWithNibName:@"LDCollectionViewCell" bundle:nil]  forCellWithReuseIdentifier:ID];
     //定时器
     [self startCount];
@@ -152,6 +154,13 @@ static NSString * ID = @"item";
         [self.collectionView scrollToItemAtIndexPath:[NSIndexPath indexPathForItem:0 inSection:sectionCount/2] atScrollPosition:UICollectionViewScrollPositionLeft animated:NO];
     });
     return cell;
+}
+
+-(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    if ([self.delegate respondsToSelector:@selector(unlimitScrollView:didSelectItemAtIndexPath:)]) {
+        [self.delegate unlimitScrollView:self didSelectItemAtIndexPath:indexPath];
+    }
 }
 
 /**
