@@ -13,7 +13,6 @@
 static NSString * ID = @"item";
 
 @interface LDUnlimitScrollView()<UICollectionViewDataSource,UICollectionViewDelegate>
-
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
 
 @property (weak, nonatomic) IBOutlet UIPageControl *pageController;
@@ -32,16 +31,17 @@ static NSString * ID = @"item";
 -(void)setItemsList:(NSArray *)itemsList
 {
     _itemsList = itemsList;
+    self.pageController.hidden = itemsList.count>1 ? false:true;
     if (_itemsList == nil || _itemsList.count == 0) {
-        _itemsList = @[[UIImage imageNamed:@"holder"]];
-    }    //注册cell
+        _itemsList = @[[UIImage imageNamed:self.placeHolder]];
+    }
+    //注册cell
     [self.collectionView registerNib:[UINib nibWithNibName:@"LDCollectionViewCell" bundle:nil]  forCellWithReuseIdentifier:ID];
     //定时器
     [self startCount];
     //基本设置
     [self setBase];
 }
-
 
 /**
  *  基本设置
@@ -190,5 +190,14 @@ static NSString * ID = @"item";
 {
     [self startCount];
 }
+
+-(NSString *)placeHolder
+{
+    if (_placeHolder == nil) {
+        return @"holder";
+    }
+    return _placeHolder;
+}
+
 
 @end
